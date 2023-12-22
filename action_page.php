@@ -18,6 +18,7 @@ table, th, td {
 }
 </style>
 <body>
+    <button type="button" onclick="submit()">ClickMe</button>
     <table class="timecodes">
         <tr>
             <th>Time Code</th>
@@ -35,7 +36,7 @@ table, th, td {
         }
 
         // create select string
-        $sql = "SELECT TIMECODE, DESCRIPTION, ISACTIVE FROM TIMECODES ORDER BY TIMECODE DESC, ISACTIVE ASC;";
+        $sql = "SELECT TIMECODE, DESCRIPTION, ISACTIVE FROM TIMECODES ORDER BY TIMECODE ASC, ISACTIVE ASC;";
 
         // prepare/execute statement
         $result = $conn->query($sql); 
@@ -64,7 +65,7 @@ table, th, td {
                 active = "0";
             }
             var postData = {
-            title: "TimeCode",
+            title: "Update",
             name: test,
             isActive: active
             };
@@ -74,11 +75,31 @@ table, th, td {
          xhr.send(JSON.stringify(postData));
          xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 201) {
-
+          
             } else {
-
+         
             }
          };
+        }
+        function submit() {
+            var postData = {
+                title: "New",
+                name: "timeCode",
+                code: "300A",
+                desc: "Clearing Ice",
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 201) {
+          
+            } else {
+         
+            }
+         };
+         location.reload();
         }
         </script>
 </body>
