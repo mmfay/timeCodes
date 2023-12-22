@@ -69,7 +69,7 @@ table, th, td {
             isActive: active
             };
          var xhr = new XMLHttpRequest();
-         xhr.open("POST", "test.php", true);
+         xhr.open("POST", "clientReq.php", true);
          xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
          xhr.send(JSON.stringify(postData));
          xhr.onreadystatechange = function() {
