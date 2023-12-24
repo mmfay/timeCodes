@@ -16,10 +16,32 @@ table, th, td {
     margin-right: auto;
     margin-top: 20%;
 }
+.timeCodeEntry {
+    margin: auto;
+    position: absolute;
+    display: block;
+}
+input[type=text], select {
+  width: 10%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 </style>
 <body>
-    <button type="button" onclick="submit()">ClickMe</button>
-    <table class="timecodes">
+<button onclick="submit()">Submit1</button>
+    <form class="timeCodeEntry">
+        <label>Time Code
+        <input type="text" id="newTC"></input>
+        </label>
+        <label>Description
+        <input type="text" id="newDesc"></input>
+        </label>
+    </from>
+    <table class="timecodes" id="phpTest">
         <tr>
             <th>Time Code</th>
             <th>Description</th>
@@ -83,23 +105,21 @@ table, th, td {
         }
         function submit() {
             var postData = {
-                title: "New",
+                title: "Insert",
                 name: "timeCode",
-                code: "300A",
-                desc: "Clearing Ice",
+                code: document.getElementById("newTC").value,
+                desc: document.getElementById("newDesc").value,
             }
             var xhr = new XMLHttpRequest();
+
             xhr.open("POST", "clientReq.php", true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhr.send(JSON.stringify(postData));
             xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 201) {
-          
-            } else {
-         
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("phpTest").innerHTML = xhr.responseText;
             }
-         };
-         location.reload();
+}
         }
         </script>
 </body>
