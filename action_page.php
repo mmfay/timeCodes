@@ -33,10 +33,8 @@ input[type=text], select {
     margin-right: auto;
     justify-content: center;
     align-items: center;
-
 }
 .form {
-    
     padding-left: 40%;
     padding-right: 40%;
     padding-bottom: 5%;
@@ -51,7 +49,7 @@ button {
 @media only screen and (max-width: 1000px) {
     .form {
         padding-left: 0%;
-    padding-right: 0%;  
+        padding-right: 0%;  
     }
 }
 .headers {
@@ -64,6 +62,10 @@ button {
     align-items: center;
     background-color: red;
     margin-bottom: 1%;
+}
+.reporting {
+    margin-left: 45%;
+    margin-right: 45%;
 }
 </style>
 <body>
@@ -79,8 +81,9 @@ button {
                 <input type="text" id="newDesc"></input>
             </label>
             <button type="submit">Submit</button>
-        </from>
+        </form>
     </div>
+    
     <div class="table-container">
         <table class="timecodes" id="phpTest">
             <tr>
@@ -123,6 +126,41 @@ button {
     <div class="headers">
         <h1>Run Reports</h1>
     </div>
+    <div class="reporting">
+        <select id="years" name="years">
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+        </select>
+    </div>
+    <div class="headers">
+        <h1>Add Worker</h1>
+    </div>
+    <div class="form-container">
+        <form class="form" id="userCreationForm">
+            <label>User ID
+                <input type="text" id="newUser"></input>
+            </label>
+            <label>Password
+                <input type="text" id="newUser"></input>
+            </label>
+            <label>First Name
+                <input type="text" id="newDesc"></input>
+            </label>
+            <label>Last Name
+                <input type="text" id="newDesc"></input>
+            </label>
+            <label>Phone
+                <input type="text" id="newDesc"></input>
+            </label>
+            <label>Email
+                <input type="text" id="newDesc"></input>
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    
     <script>
         function updateActive(test) {
             var active = "";
