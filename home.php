@@ -51,12 +51,10 @@ if (!checkCredentials($un,$pw)) {
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../stylesheets/timecodes.css">
+    <title>timeCodes</title>    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>
-
 <body>
-<h1>
-Login Successful
-</h1>
+    <h1>Login Successful</h1>
 </body>
