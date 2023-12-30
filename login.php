@@ -1,29 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>timeCodes</title>
+    <title>timeCodes</title>    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>
-<style>
-    .login {
-        margin: auto;
-        width: 30%;
-        background-color: black;
-        padding: 10px;
-        text-align: center;
-        color: white;
-        margin-top: 20%;
-        border-radius: 2%;
-    }
-    input[type=text], select {
-        width: 100%;
-        padding: 12px 2px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-</style>
 <body>
     <div class="login">
     <form action="/home.php" method="post">
@@ -44,7 +25,5 @@
     </form>
     </div>
     <script>
-
     </script>
-
 </body>
