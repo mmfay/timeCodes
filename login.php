@@ -27,11 +27,20 @@
 <body>
     <div class="login">
     <form action="/home.php" method="post">
-        <label>User Name</label>
+        <label>User Name
         <input type="text" name="user" id="userNameField">
-        <label>Password</label>
+        </label>
+        <label>Password
         <input type="text" name="password" id="passwordField">
+        </label>
         <input type="submit" value="Login">
+        <?php
+            session_start();
+            if (strcmp($_SESSION["LOGINATTEMPT"],"TRUE") == 0) {
+                echo "<label>Login Failed</label>";
+                session_destroy();
+            } 
+        ?>
     </form>
     </div>
     <script>
