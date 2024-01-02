@@ -1,5 +1,7 @@
 <?php 
     function logout() {
+        session_start();
+        $_SESSION = array();
         session_destroy();
     }
     function insertRecord($code, $desc) {
@@ -100,7 +102,7 @@ if ($data !== null) {
                 break;
             case "Delete":
                 break;
-            case "logout":
+            case "Logout":
                 logout();
                 break;
             default:
