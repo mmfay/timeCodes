@@ -1,6 +1,15 @@
 <?php 
+    function logout() {
+        session_destroy();
+    }
     function insertRecord($code, $desc) {
         $query = "INSERT INTO TIMECODES (TIMECODE, DESCRIPTION, ISACTIVE) VALUES ('" . $code . "','" . $desc . "',1);";
+        executeSQL($query);
+        returnTable();
+    }
+    function insertUser($user, $fname, $lname, $phone, $email, $password) {
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO USERINFO (USERNAME, FIRSTNAME, LASTNAME, PHONE, EMAIL, PASSWORD) VALUES ('" . $user . "','" . $fname . "','" . $lname . "','" . $phone . "','" . $email . "','" . $password . "');";
         executeSQL($query);
         returnTable();
     }
@@ -75,12 +84,24 @@ if ($data !== null) {
                 $desc = $data['desc'];
                 insertRecord($code, $desc);
                 break;
+            case "InsertUser":
+                $user = $data['username'];
+                $fname = $data['firstname'];
+                $lname = $data['lastname'];
+                $phone = $data['phone'];
+                $email = $data['email'];
+                $password = $data['password'];
+                insertUser($user, $fname, $lname, $phone, $email, $password);
+                break;
             case "Update":
                 $name = $data['name'];
                 $active = $data['isActive'];
                 updateRecord($name, $active);
                 break;
             case "Delete":
+                break;
+            case "logout":
+                logout();
                 break;
             default:
                 echo "error";
