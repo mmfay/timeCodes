@@ -1,11 +1,7 @@
 <?php
 function checkCredentials($un, $pw) {
-    $servername = "localhost:3306";
-    $username1 = "root";
-    $password1 = "vaXjev98";
-    $dbname = "TIMECODES";
     
-    $conn = new mysqli($servername,$username1,$password1,$dbname);
+    $conn = getConnection();
     
     if ($conn->connect_error) {
         die("connection failed: " . $conn->connect_error);
@@ -36,16 +32,6 @@ function checkCredentials($un, $pw) {
     
     $conn->close();
 }
-
-// check for authenticated user global variable
-// if it doesnt exist, redirect to login page, else just write html code for authenticated user
-session_start();
-
-$un = $_REQUEST["user"];
-$pw = $_REQUEST["password"];
-if (!checkCredentials($un,$pw)) {
-    header('Location: login.php');
-}
 function printOptions() {
     // create select string
     $sql = "SELECT TIMECODE FROM TIMECODES WHERE ISACTIVE = 1 ORDER BY TIMECODE ASC;";
@@ -58,7 +44,9 @@ function printOptions() {
         while($row = $result->fetch_assoc()){
             echo "<option id='" . $row["TIMECODE"] . "'>" . $row["TIMECODE"] . "</option>";
         }
-    } 
+    } else {
+        echo "<option id='NA'>No Options</option>";
+    }
 }
 function getConnection() {
     $servername = "localhost:3306";
@@ -68,6 +56,16 @@ function getConnection() {
     $conn = new mysqli($servername,$username1,$password1,$dbname);
     return $conn;
 }
+// check for authenticated user global variable
+// if it doesnt exist, redirect to login page, else just write html code for authenticated user
+session_start();
+
+$un = $_REQUEST["user"];
+$pw = $_REQUEST["password"];
+if (!checkCredentials($un,$pw) && !(strcmp($_SESSION["AUTHENTICATED"], "FALSE") == 0)) {
+    header('Location: login.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -83,9 +81,9 @@ function getConnection() {
         <li><a href="#timecodeentry">Review Data</a></li>
         <?php
             if(strcmp($_SESSION["USERID"],"admin") == 0) {
-                echo "<li><a href='#admin'>User Management</a></li>";
-                echo "<li><a href='#admin'>Time Codes</a></li>";
-                echo "<li><a href='#admin'>Reporting</a></li>";
+                echo "<li><a href='userManagement.php'>User Management</a></li>";
+                echo "<li><a href='timeCodes.php'>Time Codes</a></li>";
+                echo "<li><a href='reporting.php'>Reporting</a></li>";
             }
         ?>
     </ul>
