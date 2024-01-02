@@ -62,7 +62,7 @@ session_start();
 
 $un = $_REQUEST["user"];
 $pw = $_REQUEST["password"];
-if (!checkCredentials($un,$pw) && !(strcmp($_SESSION["AUTHENTICATED"], "FALSE") == 0)) {
+if (!checkCredentials($un,$pw) && (strcmp($_SESSION["AUTHENTICATED"], "FALSE") == 0)) {
     header('Location: login.php');
 }
 
@@ -86,6 +86,7 @@ if (!checkCredentials($un,$pw) && !(strcmp($_SESSION["AUTHENTICATED"], "FALSE") 
                 echo "<li><a href='reporting.php'>Reporting</a></li>";
             }
         ?>
+        <li><a onclick='logout()' href="home.php">Logout</a></li>
     </ul>
     <div class="form-container">
         <form class="form" id="userCreationForm">
@@ -99,4 +100,23 @@ if (!checkCredentials($un,$pw) && !(strcmp($_SESSION["AUTHENTICATED"], "FALSE") 
             <button type="submit">Submit</button>
         </form>
     </div>
+    <script>
+        function logout() {
+
+            var postData = {
+            title: "Logout"
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 201) {
+          
+            } else {
+         
+            }
+            };
+        }
+    </script>
 </body>
