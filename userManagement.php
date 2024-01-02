@@ -9,7 +9,7 @@
 <style>
 </style>
 <body>
-<h1 class="titleheader"> timeCodes </h1>
+    <h1 class="titleheader"> timeCodes </h1>
     <ul>
         <li><a href="home.php">Data Entry</a></li>
         <li><a href="#timecodeentry">Review Data</a></li>
@@ -28,22 +28,22 @@
     <div class="form-container">
         <form class="form" id="userCreationForm">
             <label>User ID
-                <input type="text" id="newUser"></input>
-            </label>
-            <label>Password
-                <input type="text" id="newUser"></input>
+                <input type="text" id="username"></input>
             </label>
             <label>First Name
-                <input type="text" id="newDesc"></input>
+                <input type="text" id="firstname"></input>
             </label>
             <label>Last Name
-                <input type="text" id="newDesc"></input>
+                <input type="text" id="lastname"></input>
             </label>
             <label>Phone
-                <input type="text" id="newDesc"></input>
+                <input type="text" id="phone"></input>
             </label>
             <label>Email
-                <input type="text" id="newDesc"></input>
+                <input type="text" id="email"></input>
+            </label>
+            <label>Password
+                <input type="text" id="password"></input>
             </label>
             <button type="submit">Submit</button>
         </form>
@@ -76,22 +76,28 @@
             }
          };
         }
-        submissionForm.addEventListener("submit", (e) => {
+        userCreationForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
             var postData = {
-                title: "Insert",
-                name: "timeCode",
-                code: document.getElementById("newTC").value,
-                desc: document.getElementById("newDesc").value,
+                title: "InsertUser",
+                name: "user",
+                username: document.getElementById("username").value,
+                firstname: document.getElementById("firstname").value,
+                lastname: document.getElementById("lastname").value,
+                phone: document.getElementById("phone").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
             }
             var xhr = new XMLHttpRequest();
 
             xhr.open("POST", "clientReq.php", true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhr.send(JSON.stringify(postData));
+            alert(JSON.stringify(postData));
             xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
+                //no table to update now, just posting.
                 document.getElementById("phpTest").innerHTML = xhr.responseText;
             }
         }
