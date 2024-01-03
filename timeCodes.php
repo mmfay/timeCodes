@@ -1,3 +1,8 @@
+<?php
+    include 'external.php';
+    session_start();
+    authentication(TRUE);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +19,7 @@
         <li><a href="home.php">Data Entry</a></li>
         <li><a href="#timecodeentry">Review Data</a></li>
         <?php
-            session_start();
-            if(strcmp($_SESSION["USERID"],"admin") == 0) {
-                echo "<li><a href='userManagement.php'>User Management</a></li>";
-                echo "<li><a href='timeCodes.php'>Time Codes</a></li>";
-                echo "<li><a href='reporting.php'>Reporting</a></li>";
-            }
+            adminList();
         ?>
     </ul>
     <div class="headers">
@@ -45,36 +45,10 @@
                 <th>Time Code</th>
                 <th>Description</th>
                 <th>Active</th>
+                <th>Delete</th>
             </tr>
-            <?php
-            $servername = "localhost:3306";
-            $username1 = "root";
-            $password1 = "vaXjev98";
-            $dbname = "TIMECODES";
-            $conn = new mysqli($servername,$username1,$password1,$dbname);
-            if ($conn->connect_error) {
-                die("connection failed: " . $conn->connect_error);
-            }
-
-            // create select string
-            $sql = "SELECT TIMECODE, DESCRIPTION, ISACTIVE FROM TIMECODES ORDER BY TIMECODE ASC, ISACTIVE ASC;";
-
-            // prepare/execute statement
-            $result = $conn->query($sql); 
-
-            // loop through results and build sidenav list/links
-            if($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()){
-                    echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["DESCRIPTION"] . "</td>";
-                    if ($row["ISACTIVE"] == 1) {
-                        echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")' checked /></td></tr>";
-                    } else {
-                        echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")'/></td</tr>";
-                    }
-                }
-            } 
-
-        
+            <?php 
+                getTimeCodesTable();
             ?>
         </table>
     </div>
@@ -92,17 +66,17 @@
             name: test,
             isActive: active
             };
-         var xhr = new XMLHttpRequest();
-         xhr.open("POST", "clientReq.php", true);
-         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-         xhr.send(JSON.stringify(postData));
-         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 201) {
-          
-            } else {
-         
-            }
-         };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 201) {
+            
+                } else {
+            
+                }
+            };
         }
         submissionForm.addEventListener("submit", (e) => {
             e.preventDefault();

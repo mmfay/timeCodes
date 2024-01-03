@@ -1,3 +1,8 @@
+<?php
+    include 'external.php';
+    session_start();
+    authentication(FALSE);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +21,7 @@
         </label>
         <input type="submit" value="Login">
         <?php
-            session_start();
-            if (strcmp($_SESSION["LOGINATTEMPT"],"TRUE") == 0) {
-                echo "<label>Login Failed</label>";
-                session_destroy();
-            } 
+            loginAttempt();
         ?>
     </form>
     </div>

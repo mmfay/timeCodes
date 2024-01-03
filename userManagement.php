@@ -1,3 +1,8 @@
+<?php
+    include 'external.php';
+    session_start();
+    authentication(TRUE);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +19,7 @@
         <li><a href="home.php">Data Entry</a></li>
         <li><a href="#timecodeentry">Review Data</a></li>
         <?php
-            session_start();
-            if(strcmp($_SESSION["USERID"],"admin") == 0) {
-                echo "<li><a href='userManagement.php'>User Management</a></li>";
-                echo "<li><a href='timeCodes.php'>Time Codes</a></li>";
-                echo "<li><a href='reporting.php'>Reporting</a></li>";
-            }
+            adminList();
         ?>
     </ul>
     <div class="headers">
@@ -51,6 +51,20 @@
     <div class="headers">
         <h1>Manage Workers</h1>
     </div>
+    <div class="table-container">
+        <table class="timecodes" id="phpTest">
+            <tr>
+                <th>User ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+            <?php 
+                userList();
+            ?>
+        </table>
+    </div>
     <script>
         function updateActive(test) {
             var active = "";
@@ -64,17 +78,17 @@
             name: test,
             isActive: active
             };
-         var xhr = new XMLHttpRequest();
-         xhr.open("POST", "clientReq.php", true);
-         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-         xhr.send(JSON.stringify(postData));
-         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 201) {
-          
-            } else {
-         
-            }
-         };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 201) {
+            
+                } else {
+            
+                }
+            };
         }
         userCreationForm.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -94,7 +108,6 @@
             xhr.open("POST", "clientReq.php", true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhr.send(JSON.stringify(postData));
-            alert(JSON.stringify(postData));
             xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 //no table to update now, just posting.
