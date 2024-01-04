@@ -1,11 +1,5 @@
 <?php
     session_start();
-    function testing1() {
-        echo "ExternalTest1";
-    }
-    function testing2() {
-        echo "ExternalTest2";
-    }
     function getDatabaseConnection() {
         $servername = "localhost:3306";
         $username1 = "root";
@@ -108,7 +102,7 @@
                 header('Location: home.php');
                  
             } else {
-                echo $_SESSION["AUTHENTICATED"];
+               
             }
         }
     }
