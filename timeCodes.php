@@ -21,6 +21,7 @@
         <?php
             adminList();
         ?>
+        <li><a onclick='logout()' href="login.php">Logout</a></li>
     </ul>
     <div class="headers">
         <h1>Create Time Codes</h1>
@@ -41,12 +42,6 @@
     </div>
     <div class="table-container">
         <table class="timecodes" id="phpTest">
-            <tr>
-                <th>Time Code</th>
-                <th>Description</th>
-                <th>Active</th>
-                <th>Delete</th>
-            </tr>
             <?php 
                 getTimeCodesTable();
             ?>
@@ -75,6 +70,21 @@
             
                 } else {
             
+                }
+            };
+        }
+        function deleteRecord(test) {
+            var postData = {
+            title: "Delete",
+            name: test,
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    document.getElementById("phpTest").innerHTML = xhr.responseText;
                 }
             };
         }

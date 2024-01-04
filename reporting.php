@@ -21,6 +21,7 @@
         <?php
             adminList();
         ?>
+        <li><a onclick='logout()' href="login.php">Logout</a></li>
     </ul>
     <div class="headers">
         <h1>Run Reports</h1>

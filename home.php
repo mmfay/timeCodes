@@ -18,7 +18,7 @@
         <?php
             adminList();
         ?>
-        <li><a onclick='logout()' href="home.php">Logout</a></li>
+        <li><a onclick='logout()' href="login.php">Logout</a></li>
     </ul>
     <div class="form-container">
         <form class="form" id="timeCodeSubmit">

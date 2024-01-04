@@ -21,6 +21,7 @@
         <?php
             adminList();
         ?>
+        <li><a onclick='logout()' href="login.php">Logout</a></li>
     </ul>
     <div class="headers">
         <h1>Add Worker</h1>
@@ -53,13 +54,6 @@
     </div>
     <div class="table-container">
         <table class="timecodes" id="phpTest">
-            <tr>
-                <th>User ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-            </tr>
             <?php 
                 userList();
             ?>
