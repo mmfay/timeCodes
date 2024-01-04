@@ -25,12 +25,13 @@
 
         // loop through results and build sidenav list/links
         if($result->num_rows > 0) {
+            echo "<tr><th>Time Code</th><th>Description</th><th>Active</th><th>Delete</th></tr>";
             while($row = $result->fetch_assoc()){
                 echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["DESCRIPTION"] . "</td>";
                 if ($row["ISACTIVE"] == 1) {
-                    echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")' checked /></td><td><button type='button' id='clarify'>Delete</button></td></tr>";
+                    echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")' checked /></td><td><button type='button' onclick='deleteRecord(" . "\"" . $row["TIMECODE"] . "\"" . ")'>Delete</button></td></tr>";
                 } else {
-                    echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")'/></td><td><button type='button' id='" . $row["TIMECODE"] . "'>Delete</button></td></tr>";
+                    echo "<td><input id='" . $row["TIMECODE"] . "' type='checkbox' onclick='updateActive(" . "\"" . $row["TIMECODE"] . "\"" . ")'/></td><td><button type='button' onclick='deleteRecord(" . "\"" . $row["TIMECODE"] . "\"" . ")'>Delete</button></td></tr>";
                 }
             }
         } 
@@ -124,7 +125,13 @@
 
         // prepare/execute statement
         $result = $conn->query($sql); 
-
+        echo "<tr>
+        <th>User ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        </tr>";
         // loop through results and build sidenav list/links
         if($result->num_rows > 0) {
             while($row = $result->fetch_assoc()){
