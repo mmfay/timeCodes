@@ -34,6 +34,10 @@
     </div>
     <div class="table-container">
         <table class="timecodes" id="phpTest">
+        <colgroup width="150">
+            <col span="1">
+            <col span="2" style="background-color: #D6EEEE" width="250px">
+        </colgroup>
             <?php 
                 dailyCodes();
             ?>
