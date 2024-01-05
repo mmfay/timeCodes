@@ -130,7 +130,7 @@
                 echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td>";
             }
         } else {
-            echo "No Data Entered Today";
+            echo "No Entries Today";
         }
 
     }
