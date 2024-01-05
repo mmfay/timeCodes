@@ -112,6 +112,28 @@
             session_destroy();
         } 
     }
+    function dailyCodes() {
+
+        // create select string
+        $sql = "SELECT TIMECODE, TIMECODESTART, TIMECODEEND FROM TIMECODESLOGGING WHERE USERNAME = '" . $_SESSION["USERID"] . "';";
+
+        // prepare/execute statement
+        $result = getDatabaseConnection()->query($sql); 
+
+        if($result->num_rows > 0) {
+            echo "<tr>
+            <th>Time Code</th>
+            <th>Start</th>
+            <th>End</th>
+            </tr>";
+            while($row = $result->fetch_assoc()){
+                echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td>";
+            }
+        } else {
+            echo "No Data Entered Today";
+        }
+
+    }
     function userList() {
         $conn = getDatabaseConnection();
         // create select string
