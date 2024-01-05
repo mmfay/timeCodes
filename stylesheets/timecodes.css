@@ -57,8 +57,13 @@ li a, .dropbtn {
 li a:hover {
   background-color: gray;
 }
-table, th, td {
-    border:1px solid black;
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
     width: 50%;
   }
   .timecodes {
