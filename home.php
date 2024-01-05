@@ -32,6 +32,13 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+    <div class="table-container">
+        <table class="timecodes" id="phpTest">
+            <?php 
+                dailyCodes();
+            ?>
+        </table>
+    </div>
     <script>
         function logout() {
             var postData = {
