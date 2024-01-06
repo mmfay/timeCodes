@@ -66,7 +66,7 @@
             var postData = {
                 title: "InsertTimeCode",
                 name: "timecode",
-                timeCode: document.getElementById("timeCodes").value
+                timeCode: timeCodes.options[timeCodes.selectedIndex].id
             }
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "clientReq.php", true);
