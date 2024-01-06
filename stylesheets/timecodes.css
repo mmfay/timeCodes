@@ -57,7 +57,10 @@ li a, .dropbtn {
 li a:hover {
   background-color: gray;
 }
-
+tr {
+    text-align: center;
+    vertical-align: middle;
+}
   tr:nth-child(even) {
     background-color: #dddddd;
   }
