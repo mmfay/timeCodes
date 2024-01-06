@@ -16,6 +16,17 @@
         executeSQL($query);
         userList();
     }
+    function insertTimeCode($timeCode) {
+        updateOpenTimeCodes();
+        $query = "INSERT INTO TIMECODESLOGGING (USERNAME, TIMECODE, TIMECODESTART) VALUES ('" . $_SESSION['USERID'] . "','" . $timeCode . "', now());";
+        executeSQL($query);
+        dailyCodes();
+
+    }
+    function updateOpenTimeCodes() {
+        $query = "UPDATE TIMECODESLOGGING SET TIMECODEEND = NOW() WHERE USERNAME = '" . $_SESSION['USERID'] . "' AND TIMECODEEND is null;";
+        executeSQL($query);
+    }
     function updateRecord($code, $active) {
         $query = "UPDATE TIMECODES SET ISACTIVE = " . intval($active) . " WHERE TIMECODE = '" . $code . "';";
         executeSQL($query);
@@ -62,6 +73,10 @@ if ($data !== null) {
                 $email = $data['email'];
                 $password = $data['password'];
                 insertUser($user, $fname, $lname, $phone, $email, $password);
+                break;
+            case "InsertTimeCode":
+                $timeCode = $data['timeCode'];
+                insertTimeCode($timeCode);
                 break;
             case "Update":
                 $name = $data['name'];
