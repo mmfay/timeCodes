@@ -115,7 +115,7 @@
     function dailyCodes() {
 
         // create select string
-        $sql = "SELECT TIMECODE, TIMECODESTART, TIMECODEEND FROM TIMECODESLOGGING WHERE USERNAME = '" . $_SESSION["USERID"] . "';";
+        $sql = "SELECT TIMECODE, TIMECODESTART, TIMECODEEND, (TIMECODEEND - TIMECODESTART) AS DURATION FROM TIMECODESLOGGING WHERE USERNAME = '" . $_SESSION["USERID"] . "' ORDER BY TIMECODESTART DESC;";
 
         // prepare/execute statement
         $result = getDatabaseConnection()->query($sql); 
@@ -125,9 +125,10 @@
             <th>Time Code</th>
             <th>Start</th>
             <th>End</th>
+            <th>Duration</th>
             </tr>";
             while($row = $result->fetch_assoc()){
-                echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td>";
+                echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td><td>" . $row["DURATION"] . "</td>";
             }
         } else {
             echo "No Entries Today";
