@@ -26,13 +26,20 @@
     <div class="headers">
         <h1>Run Reports</h1>
     </div>
-    <div class="reporting">
-        <select id="years" name="years">
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-        </select>
+    <div class="reporting-container">
+        <form class="form" id="reportingSubmit">
+            <select id="years" name="years">
+                <?php 
+                    printReportYearOptions();
+                ?>
+            </select>
+            <select id="users" name="users">
+                <?php 
+                    printUserNameOptions();
+                ?>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
     </div>
     <script>
         function updateActive(test) {
@@ -59,14 +66,14 @@
                 }
             };
         }
-        submissionForm.addEventListener("submit", (e) => {
+        reportingSubmit.addEventListener("submit", (e) => {
             e.preventDefault();
 
             var postData = {
-                title: "Insert",
-                name: "timeCode",
-                code: document.getElementById("newTC").value,
-                desc: document.getElementById("newDesc").value,
+                title: "Select",
+                name: "reporting",
+                timeRange: years.options[years.selectedIndex].id,
+                userRange: users.options[users.selectedIndex].id
             }
             var xhr = new XMLHttpRequest();
 
@@ -75,9 +82,9 @@
             xhr.send(JSON.stringify(postData));
             xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                document.getElementById("phpTest").innerHTML = xhr.responseText;
+                //document.getElementById("phpTest").innerHTML = xhr.responseText;
             }
         }
         });
-        </script>
+    </script>
 </body>
