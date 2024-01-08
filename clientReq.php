@@ -87,6 +87,11 @@ if ($data !== null) {
                 $name = $data['name'];
                 deleteTimeCode($name);
                 break;
+            case "Select":
+                $userRange = $data['userRange'];
+                $timeRange = $data['timeRange'];
+                buildReportTable($timeRange, $userRange);
+                break;
             case "Logout":
                 logout();
                 break;
