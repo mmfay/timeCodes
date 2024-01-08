@@ -156,4 +156,38 @@
             }
         } 
     }
+    function printReportYearOptions() {
+        $sql = "SELECT DISTINCT YEAR(TIMECODESTART) AS _YEAR FROM TIMECODESLOGGING;";
+
+        $result = getDatabaseConnection()->query($sql);
+
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            
+            while($row = $result->fetch_assoc()){
+                echo "<option id='" . $row['_YEAR'] . "'>" . $row['_YEAR'] . "</option>";
+                
+            }
+            echo "<option id='ALL' selected>ALL</option>";
+        } 
+
+    }
+    function printUserNameOptions() {
+        $sql = "SELECT DISTINCT USERNAME, FIRSTNAME, LASTNAME FROM USERINFO WHERE USERNAME <> 'admin';";
+
+        $result = getDatabaseConnection()->query($sql);
+
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            
+            while($row = $result->fetch_assoc()){
+                echo "<option id='" . $row['USERNAME'] . "'>" . $row['FIRSTNAME'] . " " . $row['LASTNAME'] . "</option>";
+                
+            }
+            echo "<option id='ALL' selected>ALL</option>";
+        } 
+    }
+    function buildReportTable($time, $user) {
+        
+    }
 ?>
