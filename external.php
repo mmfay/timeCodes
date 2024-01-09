@@ -188,6 +188,57 @@
         } 
     }
     function buildReportTable($time, $user) {
-        
+        switch ($time) {
+            case "ALL":
+                switch ($user) {
+                    case "ALL":
+                        runAllTimeAllUser();
+                        break;
+                    default:
+                        runAllTimeSpecificUser($user);
+                        break;
+                }
+                break;
+            default:
+                switch ($user) {
+                    case "ALL":
+                        runSpecificTimeAllUser($time);
+                        break;
+                    default:
+                        runSpecificTimeSpecificUser($time, $user);
+                        break;
+                }
+                break;
+        }
     }
+    function runAllTimeAllUser() {
+        $sql = "SELECT USERNAME, TIMECODE, YEAR(TIMECODESTART) AS _YEAR, MONTH(TIMECODESTART) AS _MONTH, SUM((TIMECODEEND - TIMECODESTART)) AS_DURATION FROM TIMECODESLOGGING GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTH(TIMECODESTART) ORDER BY YEAR(TIMECODESTART) DESC;";
+        $result = getDatabaseConnection()->query($sql);
+
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            echo "<tr>
+            <th>User ID</th>
+            <th>Time Code</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Duration</th>
+            </tr>";
+            while($row = $result->fetch_assoc()){
+                echo "<tr><td>" . $row["USERNAME"] . "</td><td>" . $row["TIMECODE"] . "</td><td>" . $row["_YEAR"] . "</td><td>" . $row["_MONTH"] . "</td><td>" . $row["_DURATION"] . "</td>";
+            }
+        }
+    }
+
+    function runAllTimeSpecificUser($user) {
+
+    }
+    function runSpecificTimeAllUser($time) {
+
+    }
+    function runSpecificTimeSpecificUser($time, $user) {
+
+    }
+
+
 ?>
