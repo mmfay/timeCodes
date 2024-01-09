@@ -39,7 +39,13 @@
                 ?>
             </select>
             <button type="submit">Submit</button>
+            <button onclick="exportToExcel()">Export</button>
         </form>
+    </div>
+    <div class="table-container">
+        <table class="timecodes" id="phpTest">
+
+        </table>
     </div>
     <script>
         function updateActive(test) {
@@ -82,9 +88,40 @@
             xhr.send(JSON.stringify(postData));
             xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                //document.getElementById("phpTest").innerHTML = xhr.responseText;
+                document.getElementById("phpTest").innerHTML = xhr.responseText;
             }
         }
         });
+        function exportToExcel() {
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById("phpTest");
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+            
+            // Specify file name
+            filename = 'excel_data.xls';
+            
+            // Create download link element
+            downloadLink = document.createElement("a");
+            
+            document.body.appendChild(downloadLink);
+            
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob( blob, filename);
+            } else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+            
+                // Setting the file name
+                downloadLink.download = filename;
+                
+                //triggering the function
+                downloadLink.click();
+            }
+    
+        }
     </script>
 </body>
