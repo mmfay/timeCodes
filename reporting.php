@@ -38,13 +38,12 @@
                     printUserNameOptions();
                 ?>
             </select>
-            <button type="submit">Submit</button>
-            <button onclick="exportToExcel()">Export</button>
+            <button type="submit">Run Report</button>
+            <button onclick="exportToExcel()">Export to Excel</button>
         </form>
     </div>
     <div class="table-container">
         <table class="timecodes" id="phpTest">
-
         </table>
     </div>
     <script>
@@ -89,6 +88,8 @@
             xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 document.getElementById("phpTest").innerHTML = xhr.responseText;
+            } else {
+                document.getElementById("phpTest").innerHTML = "<h1>ERROR</h1>";
             }
         }
         });

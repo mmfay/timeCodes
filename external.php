@@ -88,7 +88,7 @@
         }
     }
     function authentication($isNotLogin) {
-            // check if user has authenticated, if not, check to see if this is a request and look to pass credentials
+        // check if user has authenticated, if not, check to see if this is a request and look to pass credentials
         if ($isNotLogin) {
             if (!(strcmp($_SESSION["AUTHENTICATED"], "TRUE") == 0)) {
                 $un = $_REQUEST["user"];
@@ -115,7 +115,13 @@
     function dailyCodes() {
 
         // create select string
-        $sql = "SELECT TIMECODE, TIMECODESTART, TIMECODEEND, (TIMECODEEND - TIMECODESTART) AS DURATION FROM TIMECODESLOGGING WHERE USERNAME = '" . $_SESSION["USERID"] . "' ORDER BY TIMECODESTART DESC;";
+        $sql = "SELECT 
+                    TIMECODE
+                    ,TIMECODESTART
+                    ,TIMECODEEND
+                    ,TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND) AS DURATION 
+                FROM TIMECODESLOGGING 
+                WHERE USERNAME = '" . $_SESSION["USERID"] . "' ORDER BY TIMECODESTART DESC;";
 
         // prepare/execute statement
         $result = getDatabaseConnection()->query($sql); 
@@ -125,7 +131,7 @@
             <th>Time Code</th>
             <th>Start</th>
             <th>End</th>
-            <th>Duration</th>
+            <th>Duration (Hrs)</th>
             </tr>";
             while($row = $result->fetch_assoc()){
                 echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td><td>" . $row["DURATION"] . "</td>";
@@ -212,7 +218,15 @@
         }
     }
     function runAllTimeAllUser() {
-        $sql = "SELECT USERNAME, TIMECODE, YEAR(TIMECODESTART) AS _YEAR, MONTH(TIMECODESTART) AS _MONTH, SUM((TIMECODEEND - TIMECODESTART)) AS_DURATION FROM TIMECODESLOGGING GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTH(TIMECODESTART) ORDER BY YEAR(TIMECODESTART) DESC;";
+        $sql = "SELECT 
+                    USERNAME
+                    ,TIMECODE
+                    ,YEAR(TIMECODESTART) AS _YEAR
+                    ,MONTHNAME(TIMECODESTART) AS _MONTH
+                    ,SUM(TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND)) AS _DURATION 
+                FROM TIMECODESLOGGING 
+                GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
         $result = getDatabaseConnection()->query($sql);
 
         // loop through results and build options
@@ -222,7 +236,7 @@
             <th>Time Code</th>
             <th>Year</th>
             <th>Month</th>
-            <th>Duration</th>
+            <th>Duration (Hrs)</th>
             </tr>";
             while($row = $result->fetch_assoc()){
                 echo "<tr><td>" . $row["USERNAME"] . "</td><td>" . $row["TIMECODE"] . "</td><td>" . $row["_YEAR"] . "</td><td>" . $row["_MONTH"] . "</td><td>" . $row["_DURATION"] . "</td>";
@@ -231,13 +245,89 @@
     }
 
     function runAllTimeSpecificUser($user) {
+        $sql = "SELECT 
+                    USERNAME
+                    ,TIMECODE
+                    ,YEAR(TIMECODESTART) AS _YEAR
+                    ,MONTHNAME(TIMECODESTART) AS _MONTH
+                    ,SUM(TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND)) AS _DURATION 
+                FROM TIMECODESLOGGING 
+                WHERE 
+                    1=1
+                    AND USERNAME = '" . $user . "'" . 
+                "GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
+        $result = getDatabaseConnection()->query($sql);
 
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            echo "<tr>
+            <th>User ID</th>
+            <th>Time Code</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Duration (Hrs)</th>
+            </tr>";
+            while($row = $result->fetch_assoc()){
+                echo "<tr><td>" . $row["USERNAME"] . "</td><td>" . $row["TIMECODE"] . "</td><td>" . $row["_YEAR"] . "</td><td>" . $row["_MONTH"] . "</td><td>" . $row["_DURATION"] . "</td>";
+            }
+        }
     }
     function runSpecificTimeAllUser($time) {
+        $sql = "SELECT 
+                    USERNAME
+                    ,TIMECODE
+                    ,YEAR(TIMECODESTART) AS _YEAR
+                    ,MONTHNAME(TIMECODESTART) AS _MONTH
+                    ,SUM(TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND)) AS _DURATION 
+                FROM TIMECODESLOGGING 
+                WHERE 
+                    1=1
+                    AND YEAR(TIMECODESTART) = " . $time . " GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
+        $result = getDatabaseConnection()->query($sql);
 
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            echo "<tr>
+            <th>User ID</th>
+            <th>Time Code</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Duration (Hrs)</th>
+            </tr>";
+            while($row = $result->fetch_assoc()){
+                echo "<tr><td>" . $row["USERNAME"] . "</td><td>" . $row["TIMECODE"] . "</td><td>" . $row["_YEAR"] . "</td><td>" . $row["_MONTH"] . "</td><td>" . $row["_DURATION"] . "</td>";
+            }
+        }
     }
     function runSpecificTimeSpecificUser($time, $user) {
+        $sql = "SELECT 
+                    USERNAME
+                    ,TIMECODE
+                    ,YEAR(TIMECODESTART) AS _YEAR
+                    ,MONTHNAME(TIMECODESTART) AS _MONTH
+                    ,SUM(TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND)) AS _DURATION 
+                FROM TIMECODESLOGGING 
+                WHERE 
+                    1=1
+                    AND YEAR(TIMECODESTART) = " . $time . " AND USERNAME = '" . $user . "' GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
+        $result = getDatabaseConnection()->query($sql);
 
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            echo "<tr>
+            <th>User ID</th>
+            <th>Time Code</th>
+            <th>Year</th>
+            <th>Month</th>
+            <th>Duration (Hrs)</th>
+            </tr>";
+            while($row = $result->fetch_assoc()){
+                echo "<tr><td>" . $row["USERNAME"] . "</td><td>" . $row["TIMECODE"] . "</td><td>" . $row["_YEAR"] . "</td><td>" . $row["_MONTH"] . "</td><td>" . $row["_DURATION"] . "</td>";
+            }
+        }
     }
 
 
