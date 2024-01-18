@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>
 <body>
+<h1 class="titleheader"> timecodes </h1>
     <div class="login">
     <form action="/home.php" method="post">
         <label>User Name
