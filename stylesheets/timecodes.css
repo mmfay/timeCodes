@@ -2,12 +2,12 @@
 .login {
     margin: auto;
     width: 30%;
-    background-color: black;
+    background-color: grey;
     padding: 10px;
     text-align: center;
     color: white;
     margin-top: 20%;
-    border-radius: 2%;
+    border-radius: 15px 15px 15px 15px;
 }
 input[type=text], select {
     width: 100%;
@@ -17,6 +17,13 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+input[type=submit] {
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 25px 25px 25px 25px;
+  width: 50%;
 }
 .titleheader {
     background: white;
@@ -61,68 +68,77 @@ tr {
     text-align: center;
     vertical-align: middle;
 }
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 50%;
-  }
-  .timecodes {
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 1%;
-  }
-  input[type=text], select {
-  
-    padding: 12px 20px;
-    margin: 8px 0;
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 50%;
+}
+.timecodes {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1%;
+}
+input[type=text], select {
+
+  padding: 12px 20px;
+  margin: 8px 0;
+  width: 100%;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.form-container {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+.form {
+    padding-left: 40%;
+    padding-right: 40%;
+    padding-bottom: 5%;
+}
+button {
     width: 100%;
-    display: block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  .form-container {
-      margin-left: auto;
-      margin-right: auto;
-      justify-content: center;
-      align-items: center;
-      margin-top: 5%;
-  }
-  .form {
-      padding-left: 40%;
-      padding-right: 40%;
-      padding-bottom: 5%;
-  }
-  button {
-      width: 100%;
-      background-color: blue;
+    background-color: blue;
+    color: white;
+    border-radius: 25px;
+    height: 40px;
+}
+@media only screen and (max-width: 1000px) {
+    .form {
+        padding-left: 0%;
+        padding-right: 0%;  
+    }
+    .login {
+      width: 90%;
+      background-color: grey;
+      padding: 10px;
+      text-align: center;
       color: white;
-      border-radius: 25px;
-      height: 40px;
+      margin-top: 20%;
+      
   }
-  @media only screen and (max-width: 1000px) {
-      .form {
-          padding-left: 0%;
-          padding-right: 0%;  
-      }
-  }
-  .headers {
-      margin-left: auto;
-      margin-right: auto;
-      padding-left: 35%;
-      padding-right: 35%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: whitesmoke;
-      margin-bottom: 1%;
-      margin-top: 1%;
-      font-family: 'Cantarell';
-  }
-  .reporting {
-      margin-left: 45%;
-      margin-right: 45%;
-  }
+}
+.headers {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 35%;
+    padding-right: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    font-family: 'Cantarell';
+}
+.reporting {
+    margin-left: 45%;
+    margin-right: 45%;
+}
