@@ -47,7 +47,7 @@
                 <input type="text" id="password"></input>
             </label>
             <label>Security
-                <select name="timeCodes" id="timeCodes">
+                <select name="security" id="security">
                     <?php 
                         getSecurityList();
                     ?>
@@ -102,7 +102,8 @@
                 lastname: document.getElementById("lastname").value,
                 phone: document.getElementById("phone").value,
                 email: document.getElementById("email").value,
-                password: document.getElementById("password").value
+                password: document.getElementById("password").value,
+                security: document.getElementById("security").value
             }
             var xhr = new XMLHttpRequest();
 
