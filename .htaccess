@@ -1,0 +1,3 @@
+#RewriteEngine on
+#Specify a default home page (index page)
+DirectoryIndex home.php
