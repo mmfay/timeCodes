@@ -40,7 +40,7 @@
     
         // sql string
         $sql = "SELECT USERNAME, PASSWORD FROM USERINFO WHERE USERNAME = ?";
-    
+        $sqlSecurity = "SELECT SECURITYACCESS FROM USERSECURITY WHERE USERNAME = ?";
         // prepare/execute statement while binding parameters
         $stmt = $conn->prepare($sql); 
         $stmt->bind_param("s", $un);
@@ -55,6 +55,12 @@
             $_SESSION["LOGINATTEMPT"] = "TRUE";
             $_SESSION["USERID"] = $un;
             $_SESSION["PASSWORD"] = $pw;  
+            $stmt = $conn->prepare($sqlSecurity); 
+            $stmt->bind_param("s", $un);
+            $stmt->execute();
+            $result = $stmt->get_result(); // get the mysqli result
+            $user = $result->fetch_assoc(); // fetch data
+            $_SESSION["SECURITY"] = $user["SECURITYACCESS"];
             return TRUE;
         } else {
             $_SESSION["AUTHENTICATED"] = "FALSE";
@@ -81,7 +87,7 @@
         }
     }
     function adminList() {
-        if(strcmp($_SESSION["USERID"],"admin") == 0) {
+        if(strcmp($_SESSION["SECURITY"],"ADMIN") == 0) {
             echo "<li><a href='userManagement.php'>User Management</a></li>";
             echo "<li><a href='timeCodes.php'>Time Codes</a></li>";
             echo "<li><a href='reporting.php'>Reporting</a></li>";
@@ -136,8 +142,6 @@
             while($row = $result->fetch_assoc()){
                 echo "<tr><td>" . $row["TIMECODE"] . "</td><td>" . $row["TIMECODESTART"] . "</td><td>" . $row["TIMECODEEND"] . "</td><td>" . $row["DURATION"] . "</td>";
             }
-        } else {
-            echo "No Entries Today";
         }
 
     }
