@@ -329,6 +329,14 @@
             }
         }
     }
-
+    function getSecurityList() {
+        $sql = "SELECT LISTFIELD FROM TYPELISTS WHERE TYPEFIELD = 1";
+        $result = getDatabaseConnection()->query($sql);
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                echo "<option id='" . $row["LISTFIELD"] . "'>" . $row["LISTFIELD"] . "</option>";
+            }
+        }
+    }
 
 ?>

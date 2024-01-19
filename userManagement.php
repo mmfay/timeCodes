@@ -46,6 +46,13 @@
             <label>Password
                 <input type="text" id="password"></input>
             </label>
+            <label>Security
+                <select name="timeCodes" id="timeCodes">
+                    <?php 
+                        getSecurityList();
+                    ?>
+                </select>
+            </label>
             <button type="submit">Submit</button>
         </form>
     </div>
