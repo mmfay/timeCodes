@@ -46,6 +46,13 @@
             <label>Password
                 <input type="text" id="password"></input>
             </label>
+            <label>Security
+                <select name="security" id="security">
+                    <?php 
+                        getSecurityList();
+                    ?>
+                </select>
+            </label>
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -95,7 +102,8 @@
                 lastname: document.getElementById("lastname").value,
                 phone: document.getElementById("phone").value,
                 email: document.getElementById("email").value,
-                password: document.getElementById("password").value
+                password: document.getElementById("password").value,
+                security: document.getElementById("security").value
             }
             var xhr = new XMLHttpRequest();
 

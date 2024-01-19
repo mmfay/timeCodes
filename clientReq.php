@@ -10,10 +10,12 @@
         executeSQL($query);
         getTimeCodesTable();
     }
-    function insertUser($user, $fname, $lname, $phone, $email, $password) {
+    function insertUser($user, $fname, $lname, $phone, $email, $password, $security) {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $query = "INSERT INTO USERINFO (USERNAME, FIRSTNAME, LASTNAME, PHONE, EMAIL, PASSWORD) VALUES ('" . $user . "','" . $fname . "','" . $lname . "','" . $phone . "','" . $email . "','" . $password . "');";
         executeSQL($query);
+        $sqlInsert = "INSERT INTO USERSECURITY (USERNAME, SECURITYACCESS) VALUES ('" . $user . "','" . $security . "');";
+        executeSQL($sqlInsert);
         userList();
     }
     function insertTimeCode($timeCode) {
@@ -72,7 +74,8 @@ if ($data !== null) {
                 $phone = $data['phone'];
                 $email = $data['email'];
                 $password = $data['password'];
-                insertUser($user, $fname, $lname, $phone, $email, $password);
+                $security = $data['security'];
+                insertUser($user, $fname, $lname, $phone, $email, $password, $security);
                 break;
             case "InsertTimeCode":
                 $timeCode = $data['timeCode'];
