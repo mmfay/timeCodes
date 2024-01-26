@@ -29,7 +29,8 @@
                     ?>
                 </select>
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit" id="submit">Submit</button>
+            <button type="submit" id="stop">Stop</button>
         </form>
     </div>
     <div class="table-container">
@@ -59,12 +60,14 @@
             };
         }
         timeCodeSubmit.addEventListener("submit", (e) => {
+           
             e.preventDefault();
 
             var postData = {
                 title: "InsertTimeCode",
                 name: "timecode",
-                timeCode: timeCodes.options[timeCodes.selectedIndex].id
+                timeCode: timeCodes.options[timeCodes.selectedIndex].id,
+                type: this.document.activeElement.getAttribute("id")
             }
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "clientReq.php", true);
@@ -75,7 +78,8 @@
                 //no table to update now, just posting.
                 document.getElementById("phpTest").innerHTML = xhr.responseText;
             }
-        }
+            }
+        
         });
     </script>
 </body>

@@ -18,12 +18,13 @@
         executeSQL($sqlInsert);
         userList();
     }
-    function insertTimeCode($timeCode) {
+    function insertTimeCode($timeCode, $type) {
         updateOpenTimeCodes();
-        $query = "INSERT INTO TIMECODESLOGGING (USERNAME, TIMECODE, TIMECODESTART) VALUES ('" . $_SESSION['USERID'] . "','" . $timeCode . "', now());";
-        executeSQL($query);
+        if (strcmp($type,'submit') == 0) {
+            $query = "INSERT INTO TIMECODESLOGGING (USERNAME, TIMECODE, TIMECODESTART) VALUES ('" . $_SESSION['USERID'] . "','" . $timeCode . "', now());";
+            executeSQL($query);
+        }
         dailyCodes();
-
     }
     function updateOpenTimeCodes() {
         $query = "UPDATE TIMECODESLOGGING SET TIMECODEEND = NOW() WHERE USERNAME = '" . $_SESSION['USERID'] . "' AND TIMECODEEND is null;";
@@ -79,7 +80,8 @@ if ($data !== null) {
                 break;
             case "InsertTimeCode":
                 $timeCode = $data['timeCode'];
-                insertTimeCode($timeCode);
+                $type = $data['type'];
+                insertTimeCode($timeCode, $type);
                 break;
             case "Update":
                 $name = $data['name'];
