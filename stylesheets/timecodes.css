@@ -9,14 +9,16 @@
     margin-top: 20%;
     border-radius: 15px 15px 15px 15px;
 }
-input[type=text], select {
+input[type=text], input[type=password], select {
     width: 100%;
     padding: 12px 2px;
     margin: 8px 0;
+    font-size: 20px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    text-align: center;
 }
 
 input[type=submit] {
@@ -141,4 +143,7 @@ button {
 .reporting {
     margin-left: 45%;
     margin-right: 45%;
+}
+.login label {
+    font-family: 'Cantarell';
 }

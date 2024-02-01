@@ -21,12 +21,9 @@
         <input type="text" name="user" id="userNameField">
         </label>
         <label>Password
-        <input type="text" name="password" id="passwordField">
+        <input type="password" name="password" id="passwordField">
         </label>
         <input type="submit" value="Login">
-        <?php
-            loginAttempt();
-        ?>
     </form>
     </div>
     <script>
