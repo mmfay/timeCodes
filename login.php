@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>timeCodes</title>    
+    <title>timecodes</title>    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>

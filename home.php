@@ -6,12 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>timeCodes</title>    
+    <title>timecodes</title>    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>
 <body>
-    <h1 class="titleheader"> timeCodes </h1>
+    <h1 class="titleheader"> timecodes </h1>
     <ul>
         <li><a href="#home">Data Entry</a></li>
         <li><a href="#timecodeentry">Review Data</a></li>

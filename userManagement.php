@@ -7,14 +7,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>Time Codes</title>
+    <title>timecodes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../stylesheets/timecodes.css">
 </head>
 <style>
 </style>
 <body>
-    <h1 class="titleheader"> timeCodes </h1>
+    <h1 class="titleheader"> timecodes </h1>
     <ul>
         <li><a href="home.php">Data Entry</a></li>
         <li><a href="#timecodeentry">Review Data</a></li>
