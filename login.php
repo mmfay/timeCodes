@@ -20,6 +20,9 @@
         <label>User Name
         <input type="text" name="user" id="userNameField">
         </label>
+        <label>Company Code
+        <input type="text" name="compCode" id="compCodeField">
+        </label>
         <label>Password
         <input type="password" name="password" id="passwordField">
         </label>
