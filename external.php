@@ -12,7 +12,7 @@
 
         $conn = getDatabaseConnection();
         // create select string
-        $sql = "SELECT TIMECODE, DESCRIPTION, ISACTIVE FROM TIMECODES ORDER BY TIMECODE ASC, ISACTIVE ASC;";
+        $sql = "SELECT TIMECODE, DESCRIPTION, ISACTIVE FROM TIMECODES WHERE COMPANYCODE = '" . $_SESSION["COMPCODE"] . "' ORDER BY TIMECODE ASC, ISACTIVE ASC;";
 
         // prepare/execute statement
         $result = $conn->query($sql); 
@@ -30,7 +30,7 @@
             }
         } 
     }
-    function checkCredentials($un, $pw) {
+    function checkCredentials($un, $pw, $cc) {
     
         $conn = getDatabaseConnection();
         
@@ -39,11 +39,11 @@
         }
     
         // sql string
-        $sql = "SELECT USERNAME, PASSWORD FROM USERINFO WHERE USERNAME = ?";
-        $sqlSecurity = "SELECT SECURITYACCESS FROM USERSECURITY WHERE USERNAME = ?";
+        $sql = "SELECT USERNAME, PASSWORD FROM USERINFO WHERE USERNAME = ? AND COMPANYCODE = ?";
+        $sqlSecurity = "SELECT SECURITYACCESS FROM USERSECURITY WHERE USERNAME = ? AND COMPANYCODE = ?";
         // prepare/execute statement while binding parameters
         $stmt = $conn->prepare($sql); 
-        $stmt->bind_param("s", $un);
+        $stmt->bind_param("ss", $un, $cc);
         $stmt->execute();
     
         // get the results
@@ -54,9 +54,10 @@
             $_SESSION["AUTHENTICATED"] = "TRUE";
             $_SESSION["LOGINATTEMPT"] = "TRUE";
             $_SESSION["USERID"] = $un;
-            $_SESSION["PASSWORD"] = $pw;  
+            $_SESSION["PASSWORD"] = $pw; 
+            $_SESSION["COMPCODE"] = $cc; 
             $stmt = $conn->prepare($sqlSecurity); 
-            $stmt->bind_param("s", $un);
+            $stmt->bind_param("ss", $un, $cc);
             $stmt->execute();
             $result = $stmt->get_result(); // get the mysqli result
             $user = $result->fetch_assoc(); // fetch data
@@ -72,7 +73,7 @@
     }
     function printOptions() {
         // create select string
-        $sql = "SELECT TIMECODE, DESCRIPTION FROM TIMECODES WHERE ISACTIVE = 1 ORDER BY TIMECODE ASC;";
+        $sql = "SELECT TIMECODE, DESCRIPTION FROM TIMECODES WHERE ISACTIVE = 1 AND COMPANYCODE = '" . $_SESSION["COMPCODE"] . "' ORDER BY TIMECODE ASC;";
     
         // prepare/execute statement
         $result = getDatabaseConnection()->query($sql); 
@@ -99,7 +100,8 @@
             if (!(strcmp($_SESSION["AUTHENTICATED"], "TRUE") == 0)) {
                 $un = $_REQUEST["user"];
                 $pw = $_REQUEST["password"];
-                if (!checkCredentials($un,$pw)) {
+                $cc = $_REQUEST["compCode"];
+                if (!checkCredentials($un,$pw,$cc)) {
                     header('Location: login.php');
                 } 
             } 
@@ -127,7 +129,7 @@
                     ,TIMECODEEND
                     ,TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND) AS DURATION 
                 FROM TIMECODESLOGGING 
-                WHERE USERNAME = '" . $_SESSION["USERID"] . "' ORDER BY TIMECODESTART DESC;";
+                WHERE USERNAME = '" . $_SESSION["USERID"] . "' AND COMPANYCODE = '" . $_SESSION["COMPCODE"] . "' ORDER BY TIMECODESTART DESC;";
 
         // prepare/execute statement
         $result = getDatabaseConnection()->query($sql); 
@@ -148,7 +150,7 @@
     function userList() {
         $conn = getDatabaseConnection();
         // create select string
-        $sql = "SELECT USERNAME, FIRSTNAME, LASTNAME, PHONE, EMAIL FROM USERINFO WHERE USERNAME <> 'admin';";
+        $sql = "SELECT USERNAME, FIRSTNAME, LASTNAME, PHONE, EMAIL FROM USERINFO WHERE USERNAME <> 'admin' AND COMPANYCODE = '" . $_SESSION["COMPCODE"] . "';";
 
         // prepare/execute statement
         $result = $conn->query($sql); 
@@ -167,7 +169,7 @@
         } 
     }
     function printReportYearOptions() {
-        $sql = "SELECT DISTINCT YEAR(TIMECODESTART) AS _YEAR FROM TIMECODESLOGGING;";
+        $sql = "SELECT DISTINCT YEAR(TIMECODESTART) AS _YEAR FROM TIMECODESLOGGING WHERE COMPCODE ='" . $_SESSION["COMPCODE"] . "';";
 
         $result = getDatabaseConnection()->query($sql);
 
@@ -183,7 +185,7 @@
 
     }
     function printUserNameOptions() {
-        $sql = "SELECT DISTINCT USERNAME, FIRSTNAME, LASTNAME FROM USERINFO WHERE USERNAME <> 'admin';";
+        $sql = "SELECT DISTINCT USERNAME, FIRSTNAME, LASTNAME FROM USERINFO WHERE USERNAME <> 'admin' AND COMPANYCODE ='" . $_SESSION["COMPCODE"] . "';";
 
         $result = getDatabaseConnection()->query($sql);
 
@@ -229,7 +231,8 @@
                     ,MONTHNAME(TIMECODESTART) AS _MONTH
                     ,SUM(TIMESTAMPDIFF(HOUR, TIMECODESTART, TIMECODEEND)) AS _DURATION 
                 FROM TIMECODESLOGGING 
-                GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                WHERE COMPCODE = '" . $_SESSION["COMPCODE"] . "'" . 
+                "GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
                 ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
         $result = getDatabaseConnection()->query($sql);
 
@@ -258,7 +261,7 @@
                 FROM TIMECODESLOGGING 
                 WHERE 
                     1=1
-                    AND USERNAME = '" . $user . "'" . 
+                    AND USERNAME = '" . $user . "' AND COMPANYCODE '=" . $_SESSION["COMPCODE"] . "'" . 
                 "GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
                 ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
         $result = getDatabaseConnection()->query($sql);
@@ -287,7 +290,7 @@
                 FROM TIMECODESLOGGING 
                 WHERE 
                     1=1
-                    AND YEAR(TIMECODESTART) = " . $time . " GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                    AND YEAR(TIMECODESTART) = " . $time . " AND COMPANYCODE '=" . $_SESSION["COMPCODE"] . "'" . " GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
                 ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
         $result = getDatabaseConnection()->query($sql);
 
@@ -315,7 +318,7 @@
                 FROM TIMECODESLOGGING 
                 WHERE 
                     1=1
-                    AND YEAR(TIMECODESTART) = " . $time . " AND USERNAME = '" . $user . "' GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
+                    AND YEAR(TIMECODESTART) = " . $time . " AND USERNAME = '" . $user . " AND COMPANYCODE '=" . $_SESSION["COMPCODE"] . "' GROUP BY USERNAME, TIMECODE, YEAR(TIMECODESTART), MONTHNAME(TIMECODESTART) 
                 ORDER BY MONTHNAME(TIMECODESTART), YEAR(TIMECODESTART) DESC;";
         $result = getDatabaseConnection()->query($sql);
 
