@@ -29,8 +29,8 @@
                     ?>
                 </select>
             </label>
-            <button type="submit" id="submit">Submit</button>
-            <button type="submit" id="stop">Stop</button>
+            <button onclick="submitTime('submit')">Submit</button>
+            <button onclick="submitTime('stop')">Stop</button>
         </form>
     </div>
     <div class="table-container">
@@ -43,6 +43,24 @@
         </table>
     </div>
     <script>
+        function submitTime(type) {
+            var postData = {
+                title: "InsertTimeCode",
+                name: "timecode",
+                timeCode: timeCodes.options[timeCodes.selectedIndex].id,
+                type: type
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "clientReq.php", true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(postData));
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                //no table to update now, just posting.
+                document.getElementById("phpTest").innerHTML = xhr.responseText;
+            }
+            }
+        }
         function logout() {
             var postData = {
             title: "Logout"
@@ -59,27 +77,6 @@
             }
             };
         }
-        timeCodeSubmit.addEventListener("submit", (e) => {
-           
-            e.preventDefault();
 
-            var postData = {
-                title: "InsertTimeCode",
-                name: "timecode",
-                timeCode: timeCodes.options[timeCodes.selectedIndex].id,
-                type: this.document.activeElement.getAttribute("id")
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "clientReq.php", true);
-            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhr.send(JSON.stringify(postData));
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                //no table to update now, just posting.
-                document.getElementById("phpTest").innerHTML = xhr.responseText;
-            }
-            }
-        
-        });
     </script>
 </body>
