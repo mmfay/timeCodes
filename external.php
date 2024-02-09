@@ -199,6 +199,20 @@
             echo "<option id='ALL' selected>ALL</option>";
         } 
     }
+    function printWeekEndingOptions() {
+        $sql = "SELECT DISTINCT USERNAME, FIRSTNAME, LASTNAME FROM USERINFO WHERE USERNAME <> 'admin' AND COMPANYCODE ='" . $_SESSION["COMPCODE"] . "';";
+
+        $result = getDatabaseConnection()->query($sql);
+
+        // loop through results and build options
+        if($result->num_rows > 0) {
+            
+            while($row = $result->fetch_assoc()){
+                echo "<option>2024-02-11</option>";
+                echo "<option>2024-02-04</option>";
+            }
+        } 
+    }
     function buildReportTable($time, $user) {
         switch ($time) {
             case "ALL":
