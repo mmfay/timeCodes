@@ -14,7 +14,7 @@
     <h1 class="titleheader"> timecodes </h1>
     <ul>
         <li><a href="#home">Data Entry</a></li>
-        <li><a href="#timecodeentry">Review Data</a></li>
+        <li><a href="reviewData.php">Review Data</a></li>
         <?php
             adminList();
         ?>
