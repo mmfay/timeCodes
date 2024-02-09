@@ -128,17 +128,18 @@ button {
   }
 }
 .headers {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 35%;
-    padding-right: 35%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: whitesmoke;
-    margin-bottom: 1%;
-    margin-top: 1%;
-    font-family: 'Cantarell';
+  margin-right: auto;
+  padding-left: 35%;
+  padding-right: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+  margin-bottom: 1%;
+  margin-top: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  font-family: 'Cantarell';
 }
 .reporting {
     margin-left: 45%;
