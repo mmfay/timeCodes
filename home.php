@@ -20,6 +20,9 @@
         ?>
         <li><a onclick='logout()' href="login.php">Logout</a></li>
     </ul>
+    <div class="headers">
+        <h1>Time Submission</h1>
+    </div>
     <div class="form-container">
         <form class="form" id="timeCodeSubmit">
             <label>Time Code
