@@ -169,7 +169,7 @@
         } 
     }
     function printReportYearOptions() {
-        $sql = "SELECT DISTINCT YEAR(TIMECODESTART) AS _YEAR FROM TIMECODESLOGGING WHERE COMPCODE ='" . $_SESSION["COMPCODE"] . "';";
+        $sql = "SELECT DISTINCT YEAR(TIMECODESTART) AS _YEAR FROM TIMECODESLOGGING WHERE COMPANYCODE = '" . $_SESSION["COMPCODE"] . "';";
 
         $result = getDatabaseConnection()->query($sql);
 
